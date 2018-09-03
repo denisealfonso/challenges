@@ -1,0 +1,88 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Aug 31 15:14:15 2018
+
+@author: denisealfonso
+"""
+import re
+
+
+def solution(S):
+    #find the longest substring in string S that contains at least one lowercase letter and one uppercase letter, but no numbers
+    #S is only composed of 0-9, a-z, and A-Z
+    stringstyle = '\D+'
+
+    stringstyler = re.compile(stringstyle)
+
+    stringsfound = stringstyler.findall(S)
+    print(stringsfound)
+    print(len(stringsfound))
+    out = []
+    for string in stringsfound:
+        print("beginning loop for {}".format(string))
+        haslower = any(char.islower() for char in string) == True
+        hasupper = any(char.isupper() for char in string) == True
+        #lowerandupper = (haslower and hasupper)
+        #print(string)
+        #print("has lowercase:")
+        #print(haslower)
+        #print("has uppercase:")
+        #print(hasupper)
+        #print("will it be kept?")
+        #print((haslower == True and hasupper == True))
+        #if lowerandupper == False:
+        if (haslower == True and hasupper == True) == False:
+            print("if statement was false for {}".format(string))
+        else:
+            print("if statement was true for {}, so that string stays".format(string))
+            out.append(string)
+        print(out)
+            
+    
+    if len(out) == 0:
+        return -1
+            
+    else:
+        longeststring = max(out, key=len)
+
+    return len(longeststring)
+
+
+
+#test cases
+    
+#all numbers, -1
+S1 = "1234"   
+#all upper, -1
+S2 = "ABCD"
+#all lower, -1
+S3 = "abcd"    
+#no numbers, mixed, 4
+S4 = "aBcD"    
+#numbers and all lower, -1
+S5 = "a1cd"    
+#numbers and all upper, -1
+S6 = "A1CD"    
+#numbers and mixed, no mixed sequence, -1
+S7 = "AB1cd"    
+#numbers and mixed, mixed sequence, 2
+S8 = "aa1Ab1cdef"
+
+S9 = "aa1ab2ac3Aalkj4"
+
+solution(S1)
+
+solution(S2)
+
+solution(S3)
+
+solution(S4)
+
+solution(S5)
+
+solution(S6)
+
+solution(S7)
+
+solution(S8)

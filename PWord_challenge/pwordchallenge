@@ -1,0 +1,97 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Aug 31 14:34:50 2018
+
+@author: denisealfonso
+"""
+
+def solution(S):
+    #find the longest substring in string S that contains at least one lowercase letter and one uppercase letter, but no numbers
+    #S is only composed of 0-9, a-z, and A-Z
+    
+    import re
+    haslower = any(char.islower() for char in S) == True
+    hasupper = any(char.isupper() for char in S) == True
+    # write your code in Python 3.6
+    #check to see if string is only digits
+    if S.isdigit() == True:
+        return -1
+    
+    #check to see if string is only lowercase    
+    elif S.islower() == True:
+        return -1
+
+    #check to see if string is only upper case    
+    elif S.isupper() == True:
+        return -1
+    
+    #if S is not all numbers, is not all upper, and is not all lower, then if there is no number present, S is the longest string
+    elif any(char.isdigit() for char in S) == False:
+        return len(S)
+    
+    # else, if the string contains numbers:
+    elif hasupper == True and haslower == False:
+            return -1
+            
+    elif haslower == True and hasupper == False:
+            return -1
+    
+    else:
+        stringstyle = '\D+'
+
+        stringstyler = re.compile(stringstyle)
+
+        stringsfound = stringstyler.findall(S)
+        #print(stringsfound)
+        
+        for string in stringsfound:
+                haslower = any(char.islower() for char in string) == True
+                hasupper = any(char.isupper() for char in string) == True
+                if (haslower == True and hasupper == True) != True:
+                    stringsfound.remove(string)
+                
+        if len(stringsfound) == 0:
+            return -1
+            
+        else:
+            longeststring = max(stringsfound, key=len)
+
+            return len(longeststring)
+        
+    pass
+
+#test cases
+    
+#all numbers, -1
+S1 = "1234"   
+#all upper, -1
+S2 = "ABCD"
+#all lower, -1
+S3 = "abcd"    
+#no numbers, mixed, 4
+S4 = "aBcD"    
+#numbers and all lower, -1
+S5 = "a1cd"    
+#numbers and all upper, -1
+S6 = "A1CD"    
+#numbers and mixed, no mixed sequence, -1
+S7 = "AB1cd"    
+#numbers and mixed, mixed sequence, 2
+S8 = "Ab1cd"
+
+solution(S1)
+
+solution(S2)
+
+solution(S3)
+
+solution(S4)
+
+solution(S5)
+
+solution(S6)
+
+solution(S7)
+
+solution(S8)
